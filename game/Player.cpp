@@ -55,7 +55,7 @@ const int HEALTH_PER_DOSE = 10;
 const int WEAPON_DROP_TIME = 20 * 1000;
 
 // time before a next or prev weapon switch happens
-const int	WEAPON_SWITCH_DELAY		= 150;
+const int	WEAPON_SWITCH_DELAY		= 15;  //Daniel DeMartino Edit
 
 const float	PLAYER_ITEM_DROP_SPEED	= 100.0f;
 
@@ -14075,3 +14075,30 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 }
 
 // RITUAL END
+
+//Daniel DeMartino Start
+void idPlayer::addExp(int experience){
+	exp = exp + experience;
+}
+
+void idPlayer::levelManager(int exp){
+	if (exp > 1000 && level < 16)
+	{
+		levelUp();
+	}
+}
+
+void idPlayer::levelUp(){
+	int newMaxHealth = inventory.getMaxHealth();
+	newMaxHealth = newMaxHealth * 1.1;
+	inventory.setMaxHealth(newMaxHealth);
+}
+
+int idInventory::getMaxHealth(){
+	return maxHealth;
+}
+
+void idInventory::setMaxHealth(int newMaxHealth){
+	maxHealth = newMaxHealth;
+}
+//Danie DeMartino End

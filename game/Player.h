@@ -265,6 +265,11 @@ public:
 //	idList<rvDatabaseEntry>	database;
 	
 	int						secretAreasDiscovered;
+
+//Daniel DeMartino Start
+	int						getMaxHealth();
+	void					setMaxHealth(int newMaxHealth);
+//Daniel DeMartino End
 };
 
 class idPlayer : public idActor {
@@ -1117,6 +1122,14 @@ private:
 	void					InitWeapon			( void );
 	// RAVEN END
 
+	//Daniel DeMartino Start
+	int						exp;
+	int						level;
+	void					addExp(int exp);
+	void					levelManager(int exp);
+	void					levelUp();
+	//Daniel DeMartino End
+
 	bool					IsLegsIdle						( bool crouching ) const;
 	
 	stateResult_t			State_Wait_Alive				( const stateParms_t& parms );
@@ -1155,6 +1168,8 @@ private:
 	stateResult_t			State_Legs_Dead					( const stateParms_t& parms );
 	
  	CLASS_STATES_PROTOTYPE( idPlayer );
+
+	
 };
 
 ID_INLINE bool idPlayer::IsBeingTalkedTo( void ) {
