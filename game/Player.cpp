@@ -1763,6 +1763,12 @@ void idPlayer::Init( void ) {
 		teamDoublerPending = false;
 		teamDoubler = PlayEffect( "fx_doubler", renderEntity.origin, renderEntity.axis, true );
 	}
+
+	//Daniel DeMartino Start
+	gameLocal.Printf("Line befor settng exp at start\n");
+	exp = 0;
+	level = 0;
+	//Daniel DeMartino End
 }
 
 /*
@@ -14046,7 +14052,7 @@ void idPlayer::ResetCash()
 
 	float minCash = (float) gameLocal.serverInfo.GetInt("si_buyModeMinCredits");
 	float maxCash = (float) gameLocal.serverInfo.GetInt("si_buyModeMaxCredits");
-	buyMenuCash = (float) gameLocal.serverInfo.GetInt("si_buyModeStartingCredits");
+	buyMenuCash = (float)gameLocal.serverInfo.GetInt("si_buyModeStartingCredits");
 	ClampCash( minCash, maxCash );
 }
 
@@ -14078,20 +14084,37 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 
 //Daniel DeMartino Start
 void idPlayer::addExp(int experience){
+	gameLocal.Printf("In addExp function");
 	exp = exp + experience;
+	setExp(exp);
+	levelManager(exp);
 }
 
 void idPlayer::levelManager(int exp){
+	gameLocal.Printf("In levelManager function");
+	gameLocal.Printf("Expeirence is: " + exp);
+	exp = getExp();
+	level = getLevel();
 	if (exp > 1000 && level < 16)
 	{
 		levelUp();
 	}
+	else {
+		return;
+	}
 }
 
 void idPlayer::levelUp(){
+	gameLocal.Printf("In levelUp function");
 	int newMaxHealth = inventory.getMaxHealth();
 	newMaxHealth = newMaxHealth * 1.1;
 	inventory.setMaxHealth(newMaxHealth);
+	resetExp();
+}
+
+void idPlayer::resetExp(){
+	gameLocal.Printf("In resetExp function");
+	exp = 0;
 }
 
 int idInventory::getMaxHealth(){
@@ -14100,5 +14123,21 @@ int idInventory::getMaxHealth(){
 
 void idInventory::setMaxHealth(int newMaxHealth){
 	maxHealth = newMaxHealth;
+}
+
+int idPlayer::getLevel(void){
+	return level;
+}
+
+void idPlayer::setLevel(int lvl){
+	level = lvl;
+}
+
+int idPlayer::getExp(){
+	return exp;
+}
+
+void idPlayer::setExp(int experience){
+	exp = experience;
 }
 //Danie DeMartino End

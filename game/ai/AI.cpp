@@ -1668,6 +1668,13 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 	if ( attacker && attacker->IsType( idActor::GetClassType() ) ) {
 		gameLocal.AlertAI( ( idActor * )attacker );
 	}
+	
+	if(attacker && attacker->IsType(idPlayer::GetClassType())) {
+		idPlayer *player;
+		player = (idPlayer *)attacker;
+		player->addExp(1001);
+		gameLocal.Printf("In Killed function \n "); 
+	}
 
 	// activate targets
 	ActivateTargets( this );

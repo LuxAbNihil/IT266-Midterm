@@ -19,6 +19,7 @@ public:
 	virtual int			GetDamageForLocation			( int damage, int location );
 	virtual void		DamageFeedback					( idEntity *victim, idEntity *inflictor, int &damage );
 
+
 protected:
 
 	virtual void		OnStopMoving					( aiMoveCommand_t oldMoveCommand );

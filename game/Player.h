@@ -801,6 +801,19 @@ public:
 	void					ResetCash();
 // RITUAL END
 
+//Daniel DeMartino Start
+	int						exp;
+	int						level;
+	void					addExp(int exp);
+	void					levelManager(int exp);
+	void					levelUp();
+	void					resetExp();
+	int						getLevel(void);
+	void					setLevel(int level);
+	int						getExp(void);
+	void					setExp(int exp);
+//Daniel DeMartino End
+
 protected:
 	void					SetupHead( const char* modelKeyName = "", idVec3 headOffset = idVec3(0, 0, 0) );
 
@@ -1122,13 +1135,7 @@ private:
 	void					InitWeapon			( void );
 	// RAVEN END
 
-	//Daniel DeMartino Start
-	int						exp;
-	int						level;
-	void					addExp(int exp);
-	void					levelManager(int exp);
-	void					levelUp();
-	//Daniel DeMartino End
+	
 
 	bool					IsLegsIdle						( bool crouching ) const;
 	

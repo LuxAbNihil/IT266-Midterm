@@ -110,14 +110,14 @@ bool rvWeaponBlaster::UpdateAttack ( void ) {
 			fireHeldTime   = gameLocal.time;
 			viewModel->SetShaderParm ( BLASTER_SPARM_CHARGEGLOW, chargeGlow[0] );
 		}
-	}		
+	}	
 
 	// If they have the charge mod and they have overcome the initial charge 
 	// delay then transition to the charge state.
 	if ( fireHeldTime != 0 ) {
 		if ( gameLocal.time - fireHeldTime > chargeDelay ) {
 			SetState ( "Charge", 4 );
-			return true;
+		return true;
 		}
 
 		// If the fire button was let go but was pressed at one point then 
@@ -139,6 +139,9 @@ bool rvWeaponBlaster::UpdateAttack ( void ) {
 	
 	return false;
 }
+
+
+
 
 /*
 ================
@@ -356,7 +359,7 @@ stateResult_t rvWeaponBlaster::State_Charge ( const stateParms_t& parms ) {
 				
 				return SRESULT_WAIT;
 			} 
-			SetState ( "Charged", 4 );
+			SetState ( "Charged", 4 );//Daniel DeMartino changed Charged to Fire
 			return SRESULT_DONE;
 	}
 	return SRESULT_ERROR;	
@@ -423,8 +426,6 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 				SetState ( "Idle", 4 );
 				return SRESULT_DONE;
 			}
-
-
 	
 			if ( gameLocal.time - fireHeldTime > chargeTime ) {	
 				Attack ( true, 1, spread, 0, 1.0f );
