@@ -34,7 +34,12 @@ private:
 
 	void				RageStart			( void );
 	void				RageStop			( void );
-	
+
+	//Daniel DeMartino Start
+	int					experience;               
+	//Daniel DeMartino End
+
+
 	// Torso States
 	stateResult_t		State_Torso_Enrage		( const stateParms_t& parms );
 	stateResult_t		State_Torso_Pain		( const stateParms_t& parms );
@@ -53,6 +58,14 @@ rvMonsterGrunt::rvMonsterGrunt
 */
 rvMonsterGrunt::rvMonsterGrunt ( void ) {
 	standingMeleeNoAttackTime = 0;
+	
+	//Daniel DeMartino Start
+	gameLocal.Printf("In rvMonsterGrunt Function");
+	gameLocal.DPrintf("In rvMonsterGrunt Function");
+	gameLocal.Warning("In rvMonsterGrunt Function");
+	gameLocal.DWarning("In rvMonsterGrunt Function");
+	experience = 1100;
+	//Daniel DeMartino Stop
 }
 
 /*
@@ -61,6 +74,10 @@ rvMonsterGrunt::Spawn
 ================
 */
 void rvMonsterGrunt::Spawn ( void ) {
+	gameLocal.Printf("In Spawn function for Grunt");
+	gameLocal.DPrintf("In Spawn function for Grunt");
+	gameLocal.Warning("In Spawn function for Grunt");
+	gameLocal.DWarning("In Spawn function for Grunt");
 	rageThreshold = spawnArgs.GetInt ( "health_rageThreshold" );
 
 	// Custom actions
@@ -71,7 +88,9 @@ void rvMonsterGrunt::Spawn ( void ) {
 	// Enraged to start?
 	if ( spawnArgs.GetBool ( "preinject" ) ) {
 		RageStart ( );
-	}	
+	}
+
+	
 }
 
 /*
@@ -107,7 +126,7 @@ rvMonsterGrunt::RageStart
 */
 void rvMonsterGrunt::RageStart ( void ) {
 	SetShaderParm ( 6, 1 );
-
+	gameLocal.Printf("In Rage Start");
 	// Disable non-rage actions
 	actionEvadeLeft.fl.disabled = true;
 	actionEvadeRight.fl.disabled = true;
@@ -195,7 +214,20 @@ rvMonsterGrunt::OnDeath
 ================
 */
 void rvMonsterGrunt::OnDeath ( void ) {
+	idPlayer *player;
+	idEntity *ent;
+
+	//Daniel DeMartino Start
+	gameLocal.Printf("In Monster_Grunt OnDeath function \n");
+	ent = idAI::GetEnemy();              //selects the entity that killed this entity
+	if (typeid(*ent) == typeid(*player)) //checks to see if value pointed to by ent is the same type as pointed to by player
+	{  
+		player = (idPlayer*)ent;        //casts the pointer to ent to a pointer to player. 
+		player->addExp(experience);           
+	}
+	//Daniel DeMartino End
 	RageStop ( );
+	//player->addExp();
 	return idAI::OnDeath ( );
 }
 
@@ -224,7 +256,8 @@ rvMonsterGrunt::AdjustHealthByDamage
 =====================
 */
 void rvMonsterGrunt::AdjustHealthByDamage ( int damage ) {
-	// Take less damage during enrage process 
+	// Take less damage during enrage process
+	gameLocal.DWarning("In AdjustHealthByDamage");
 	if ( rageThreshold && health < rageThreshold ) { 
 		health -= (damage * 0.25f);
 		return;

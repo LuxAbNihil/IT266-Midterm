@@ -14097,18 +14097,21 @@ void idPlayer::levelManager(int exp){
 	level = getLevel();
 	if (exp > 1000 && level < 16)
 	{
-		levelUp();
+		levelUp(level);
 	}
 	else {
 		return;
 	}
 }
 
-void idPlayer::levelUp(){
+void idPlayer::levelUp(int level){
 	gameLocal.Printf("In levelUp function");
 	int newMaxHealth = inventory.getMaxHealth();
 	newMaxHealth = newMaxHealth * 1.1;
 	inventory.setMaxHealth(newMaxHealth);
+	float newHealth = (float)newMaxHealth;
+	Event_SetHealth(newHealth);
+	setLevel(level);
 	resetExp();
 }
 

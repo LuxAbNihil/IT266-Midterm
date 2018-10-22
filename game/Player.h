@@ -806,7 +806,7 @@ public:
 	int						level;
 	void					addExp(int exp);
 	void					levelManager(int exp);
-	void					levelUp();
+	void					levelUp(int level);
 	void					resetExp();
 	int						getLevel(void);
 	void					setLevel(int level);
@@ -1115,7 +1115,7 @@ private:
 	void					Event_ApplyImpulse			( idEntity* ent, idVec3 &point, idVec3 &impulse	);
 
 	// mekberg:	added sethealth
-	void					Event_SetHealth					( float newHealth );
+	void					Event_SetHealth					( float newHealth ); //SET HEALTH HERE
 	void					Event_SetArmor					( float newArmor );
 
 	void					Event_SetExtraProjPassEntity( idEntity* _extraProjPassEntity );
